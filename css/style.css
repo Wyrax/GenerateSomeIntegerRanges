@@ -1,0 +1,47 @@
+:root {
+	--border-px: 0px;
+	--global-color: #337AB7;
+	/* --max-width: 500px; */
+	/* --main-font: 'Montserrat Alternates', sans-serif; */
+}
+.main_wrapper {
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	max-width: 900px;
+	height: auto;
+	border: var(--border-px) solid black;
+}
+.textarea_wrapper {
+    display: block;
+    float: left;
+    margin-right: 10px;
+    border: var(--border-px) solid red;
+}
+.button_wrapper {
+    display: block;
+    float: left;
+    width: min-content;
+}
+.option_textfield {
+    display: inline-block;
+    margin-left: 10px;
+    height: 20px;
+}
+button {
+    -webkit-tap-highlight-color: transparent;
+    width: 250px;
+    margin-bottom: 10px;
+    padding: 6px 10px 6px 10px;
+    font-family: Arial, sans-serif;;
+    font-size: 22px;
+    text-align: center;
+    color: white;
+    border: 1px solid var(--global-color);
+    background-color: var(--global-color);
+    cursor: pointer;
+    transition: width .5s;
+}
+.animate_width {
+    width: 120px;
+}
