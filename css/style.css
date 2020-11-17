@@ -18,6 +18,11 @@
     margin-right: 10px;
     border: var(--border-px) solid red;
 }
+textarea {
+    padding: 10px;
+    font-family: Arial, sans-serif;;
+    font-size: 20px;
+}
 .button_wrapper {
     display: block;
     float: left;
@@ -31,10 +36,13 @@
 button {
     -webkit-tap-highlight-color: transparent;
     width: 250px;
+    height: 40px;
     margin-bottom: 10px;
-    padding: 6px 10px 6px 10px;
+    padding: 6px 0px 6px 10px;
     font-family: Arial, sans-serif;;
     font-size: 22px;
+    line-height: 1.3;
+    overflow: hidden;
     text-align: center;
     color: white;
     border: 1px solid var(--global-color);
@@ -43,5 +51,8 @@ button {
     transition: width .5s;
 }
 .animate_width {
-    width: 120px;
+    width: 140px;
+}
+.error {
+    color: red;
 }
