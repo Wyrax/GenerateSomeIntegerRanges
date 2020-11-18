@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generate Some Integer Ranges</title>
+    <title>Generate Some Positive Integer Incrementing Ranges</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/w3school.css">
     <script src="js/script.js"></script>
 </head>
 <body>
 <div class="main_wrapper">
-    <h1>Generate Some Integer Ranges</h1>
+    <h1>Generate Some Positive* Integer Incrementing** Ranges</h1>
+    <p>General purpose of this script is to generate number ranges for the Data Merge function of Adobe InDesign publishing software so it has some limitations:</p>
+    <p>* Negative numbers not accepted as the dash symbol used for a range indication.</p>
+    <p>** This script serves incrementing integers only.</p><br>
     <div id="option_area_wrapper" class="options_wrapper">
         <label class="container">Create header row:
             <input id="header_checkbox" type="checkbox" checked="checked">
@@ -27,15 +30,25 @@
         </label>
     </div>
     <div id="input_area_wrapper" class="textarea_wrapper">
-        <textarea id="input_area" name="input_area" rows="auto" cols="25" placeholder="Example: 1, 2, 3, 5-7, 42-50, 118-122, 34-39, 16, 74"></textarea>
+        <textarea id="input_area" name="input_area" rows="auto" cols="20" placeholder="Example: 1, 2, 3, 5-7, 42-50, 98-102, 16, 74"></textarea>
     </div>
     <div id="output_area_wrapper" class="textarea_wrapper">
-        <textarea id="output_area" name="output_area" rows="auto" cols="25" placeholder="Output field"></textarea>
+        <textarea id="output_area" name="output_area" rows="auto" cols="20" placeholder="Output field"></textarea>
     </div>
     <div class="button_wrapper">
         <button id="copy_button">GENERATE & COPY</button>
         <button id="save_button">GENERATE & SAVE</button>
+        <label class="option_label">File name:
+            <input id="filename_option" class="option_textfield" type="text" value="File Name">.txt
+        </label>
     </div>
+
+    <br><br><br><br><br><br><br>
+    <div style="display: block; float: left;">
+        <p>1, 2, 3, 5-7, 42-50</p>
+        <p>13-7-20</p>
+    </div>
+    
 </div>
 </body>
 </html>

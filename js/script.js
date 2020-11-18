@@ -1,3 +1,5 @@
+let dataGenerated = false;
+
 window.addEventListener('DOMContentLoaded', () => {
     console.log('%c >>> DOM loaded ', 'background: #222; color: #bada55');
 
@@ -15,7 +17,6 @@ let inputArea = document.getElementById('input_area');
 let outputArea = document.getElementById('output_area');
 let copyButton = document.getElementById('copy_button');
 let saveButton = document.getElementById('save_button');
-let dataGenerated = false;
 
 // inputArea.addEventListener('change', function() {
 //     inputArea.value = '';
@@ -23,23 +24,26 @@ let dataGenerated = false;
 // });
 
 copyButton.addEventListener('click', () => {
-    outputArea.select();
-    document.execCommand('copy');
-    copyButton.textContent = 'COPIED!';
-    copyButton.classList.add('animate_width');
     generateRanges();
+    if (dataGenerated) {
+        outputArea.select();
+        document.execCommand('copy');
+        copyButton.textContent = 'COPIED!';
+        copyButton.classList.add('animate_width');
+        // generateRanges();
+    }
 });
 
 saveButton.addEventListener('click', () => {
+    generateRanges();
     if (dataGenerated) {
-        download(joinedDataMergeText, 'data-merge.txt', 'text/plain');
         outputArea.select();
         saveButton.textContent = 'SAVED!';
         saveButton.classList.add('animate_width');
-        generateRanges();
+        // generateRanges();
+        download(joinedDataMergeText, 'data-merge.txt', 'text/plain');
     } else {
-        outputArea.textContent = '← NO DATA TO SAVE';
-        outputArea.classList.add('error');
+        // riseWarning('no data');
     }
 });
 
@@ -49,9 +53,7 @@ function generateRanges() {
     // let outputArea = document.getElementById('output_area');
 
 if (inputArea.value == '') {
-    console.log('%c Input HAS NO DIGITS ', 'background: red; color: white');
-    outputArea.textContent = '← INPUT HAS NO DIGITS';
-    outputArea.classList.add('error');
+    riseWarning('no digits');
     inputArea.select();
     renewButtons();
     return;
@@ -68,6 +70,16 @@ if (inputArea.value == '') {
     for (let i = 0; i < filteredTextArray.length; i++) {
         if (filteredTextArray[i].indexOf('-') > -1) {
             let rangeMinMax = filteredTextArray[i].split('-');
+
+            //here broken range or negative
+            if (rangeMinMax[0] == '') {
+                rangeMinMax[0] = rangeMinMax[1];
+            }
+            if (rangeMinMax[1] == '') {
+                rangeMinMax[1] = rangeMinMax[0];
+            }
+
+
             for (let j = parseInt(rangeMinMax[0]); j <= parseInt(rangeMinMax[rangeMinMax.length-1]); j++) {
                 unpackedRangesArray.push(j);
             };
@@ -78,11 +90,9 @@ if (inputArea.value == '') {
     if (document.getElementById('sort_checkbox').checked) {
         unpackedRangesArray.sort(function(a, b){return a - b});
     }
-    //HERE NaN check
+
     if (isNaN(unpackedRangesArray[0])) {
-        console.log('%c NOT A NUMBER ', 'background: red; color: white');
-        outputArea.textContent = '← NOT A NUMBER';
-        outputArea.classList.add('error');
+        riseWarning('NaN');
         inputArea.select();
         renewButtons();
         return;
@@ -145,14 +155,16 @@ function riseWarning(type) {
             warning = '← NOT A NUMBER';
             break;
         case 'no digits':
-            warning = '← INPUT HAS NO DIGITS';
+            warning = '← NO DIGITS FOUND';
             break;
-    
         default:
+            console.log('%c Unidentified error', 'background: red; color: white');
             break;
     }
+    console.log(`%c Warning: ${warning} `, 'background: red; color: white');
     outputArea.textContent = warning;
     outputArea.classList.add('error');
+    dataGenerated = false;
 }
 
 // Textarea autoresize by DreamTeK (https://stackoverflow.com/users/2120261/dreamtek)
