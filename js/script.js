@@ -13,15 +13,16 @@ function download(content, fileName, contentType) {
 }
 
 let joinedDataMergeText;
+let headerOption = document.getElementById('header_option');
+console.log(headerOption.value);
 let inputArea = document.getElementById('input_area');
 let outputArea = document.getElementById('output_area');
 let copyButton = document.getElementById('copy_button');
 let saveButton = document.getElementById('save_button');
 
-// inputArea.addEventListener('change', function() {
-//     inputArea.value = '';
-//     queryData = inputArea.value;
-// });
+headerOption.addEventListener('input', function() {
+    renewButtons();
+});
 
 copyButton.addEventListener('click', () => {
     generateRanges();
@@ -40,7 +41,7 @@ saveButton.addEventListener('click', () => {
         outputArea.select();
         saveButton.textContent = 'SAVED!';
         saveButton.classList.add('animate_width');
-        // generateRanges();
+        // getFileName();
         download(joinedDataMergeText, 'data-merge.txt', 'text/plain');
     } else {
         // riseWarning('no data');
@@ -51,6 +52,8 @@ function generateRanges() {
     // let inputArea = document.getElementById('input_area');
     // let inputText = inputArea.value;
     // let outputArea = document.getElementById('output_area');
+    outputArea.value = '';
+    dataGenerated = false;
 
 if (inputArea.value == '') {
     riseWarning('no digits');
@@ -71,7 +74,7 @@ if (inputArea.value == '') {
         if (filteredTextArray[i].indexOf('-') > -1) {
             let rangeMinMax = filteredTextArray[i].split('-');
 
-            //here broken range or negative
+            // broken range or negative range
             if (rangeMinMax[0] == '') {
                 rangeMinMax[0] = rangeMinMax[1];
             }
@@ -115,7 +118,7 @@ if (inputArea.value == '') {
     console.log('%c Result generated: ', 'background: #ff9900; color: black');
     console.log(joinedDataMergeText.split('\n'));
 
-    outputArea.textContent = joinedDataMergeText;
+    outputArea.value = joinedDataMergeText;
 
     if (outputArea.scrollHeight > 500) {
         outputArea.style.height = '500px';
@@ -132,15 +135,15 @@ function renewButtons() {
     console.log('renew buttons');
     copyButton.classList.remove('animate_width');
     saveButton.classList.remove('animate_width');
-    // if (!outputArea.textContent == '← INPUT HAS NO DIGITS' || !outputArea.textContent == '← NOT A NUMBER') {
-        // outputArea.textContent = '';
+    // if (!outputArea.value == '← INPUT HAS NO DIGITS' || !outputArea.value == '← NOT A NUMBER') {
+        // outputArea.value = '';
         // outputArea.classList.remove('error');
     // }
 
     copyButton.textContent = 'GENERATE & COPY';
     saveButton.textContent = 'GENERATE & SAVE';
     // } else {
-    // outputArea.textContent = '';
+    // outputArea.value = '';
     // outputArea.classList.remove('error');
     // }
 }
@@ -162,7 +165,7 @@ function riseWarning(type) {
             break;
     }
     console.log(`%c Warning: ${warning} `, 'background: red; color: white');
-    outputArea.textContent = warning;
+    outputArea.value = warning;
     outputArea.classList.add('error');
     dataGenerated = false;
 }
@@ -182,8 +185,12 @@ function riseWarning(type) {
         // if (!inputArea.textContent == '') {
             renewButtons();
         // } else {
-            outputArea.textContent = '';
-            outputArea.classList.remove('error');
+            // IF dataGenerated = false!
+            if (!dataGenerated) {
+                outputArea.value = '';
+                outputArea.classList.remove('error');
+            }
+
         // }
     }
 
