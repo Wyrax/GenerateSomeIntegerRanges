@@ -34,6 +34,7 @@ fileNameOption.addEventListener('input', function() {
 
 copyButton.addEventListener('click', () => {
     generateRanges();
+
     if (dataGenerated) {
         outputArea.select();
         document.execCommand('copy');
@@ -44,6 +45,7 @@ copyButton.addEventListener('click', () => {
 
 saveButton.addEventListener('click', () => {
     generateRanges();
+
     if (dataGenerated) {
         outputArea.select();
         saveButton.textContent = 'SAVED!';
@@ -68,7 +70,8 @@ function generateRanges() {
 
     console.log('%c Input text: ', 'background: #ccc; color: black');
     console.log(inputArea.value);
-    filteredTextArray = inputArea.value.replace(/[^0-9\s-,;]/g, '').replace(/[\r\n,;]/g, ' ').replace(/\s+/g, ' ').trim().split(' ');
+
+    filteredTextArray = inputArea.value.replace(/[^0-9\s-,;\.]/g, '').replace(/[\r\n,;\.]/g, ' ').replace(/\s+/g, ' ').trim().split(' ');
     console.log('%c Filtered text: ', 'background: #df8482; color: black');
     console.log(filteredTextArray);
 
@@ -78,14 +81,13 @@ function generateRanges() {
         if (filteredTextArray[i].indexOf('-') > -1) {
             let rangeMinMax = filteredTextArray[i].split('-');
 
-            // broken range or negative range
+            // Broken range or negative range negation
             if (rangeMinMax[0] == '') {
                 rangeMinMax[0] = rangeMinMax[1];
             }
             if (rangeMinMax[1] == '') {
                 rangeMinMax[1] = rangeMinMax[0];
             }
-
 
             for (let j = parseInt(rangeMinMax[0]); j <= parseInt(rangeMinMax[rangeMinMax.length-1]); j++) {
                 unpackedRangesArray.push(j);
@@ -94,6 +96,7 @@ function generateRanges() {
             unpackedRangesArray.push(parseInt(filteredTextArray[i]));
         };
     };
+
     if (document.getElementById('sort_checkbox').checked) {
         unpackedRangesArray.sort(function(a, b){return a - b});
     }
@@ -111,6 +114,7 @@ function generateRanges() {
     }
     console.log('%c Unpacked ranges: ', 'background: #99ccff; color: black');
     console.log(unpackedRangesArray);
+
     if (document.getElementById('duplicates_checkbox').checked) {
         let dataMergeSet = new Set(unpackedRangesArray);
         console.log('%c Removed duplicates: ', 'background: #99ff99; color: black');
@@ -127,29 +131,20 @@ function generateRanges() {
     if (outputArea.scrollHeight > 500) {
         outputArea.style.height = '500px';
     } else {
-        outputArea.style.height = (outputArea.scrollHeight) + 'px';
+        outputArea.style.height = 'auto';
+        outputArea.style.height = outputArea.scrollHeight + 'px';
     }
+
     dataGenerated = true;
     console.log('%c <<< Data served ', 'background: #222; color: #bada55');
-    // download(joinedDataMergeText, 'data-merge.txt', 'text/plain');
 }
 
 function renewButtons() {
-    // if (!inputArea.textContent == '') {
     console.log('renew buttons');
     copyButton.classList.remove('animate_width');
     saveButton.classList.remove('animate_width');
-    // if (!outputArea.value == '← INPUT HAS NO DIGITS' || !outputArea.value == '← NOT A NUMBER') {
-        // outputArea.value = '';
-        // outputArea.classList.remove('error');
-    // }
-
     copyButton.textContent = 'GENERATE & COPY';
     saveButton.textContent = 'GENERATE & SAVE';
-    // } else {
-    // outputArea.value = '';
-    // outputArea.classList.remove('error');
-    // }
 }
 
 function riseWarning(type) {
@@ -172,37 +167,32 @@ function riseWarning(type) {
     outputArea.value = warning;
     outputArea.classList.add('error');
     dataGenerated = false;
+    outputArea.style.height = 'auto';
+    outputArea.style.height = outputArea.scrollHeight + 'px';
 }
 
 // Textarea autoresize by DreamTeK (https://stackoverflow.com/users/2120261/dreamtek)
-    const tx = document.getElementsByTagName('textarea');
-    for (let i = 0; i < tx.length; i++) {
-        tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;');
-        // tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;overflow-y:hidden;');
-        tx[i].addEventListener('input', OnInput);
-        tx[i].addEventListener('change', OnInput);
+const tx = document.getElementsByTagName('textarea');
+for (let i = 0; i < tx.length; i++) {
+    tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;');
+    tx[i].addEventListener('input', OnInput);
+    tx[i].addEventListener('change', OnInput);
+}
+
+function OnInput() {
+    this.style.height = 'auto';
+    if (this.scrollHeight > 500) {
+        this.style.height = '500px';
+    } else {
+        this.style.height = (this.scrollHeight) + 'px';
     }
 
-    function OnInput() {
-        this.style.height = 'auto';
-        // this.style.height = (this.scrollHeight) + 'px';
-        if (this.scrollHeight > 500) {
-            this.style.height = '500px';
-        } else {
-            this.style.height = (this.scrollHeight) + 'px';
-        }
-
-
-        // if (!inputArea.textContent == '') {
-            renewButtons();
-        // } else {
-            // IF dataGenerated = false!
-            if (!dataGenerated) {
-                outputArea.value = '';
-                outputArea.classList.remove('error');
-            }
-
-        // }
+    renewButtons();
+    
+    if (!dataGenerated) {
+        outputArea.value = '';
+        outputArea.classList.remove('error');
     }
+}
 
 });
