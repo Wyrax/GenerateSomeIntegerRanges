@@ -1,26 +1,34 @@
 let dataGenerated = false;
 
 window.addEventListener('DOMContentLoaded', () => {
-    console.log('%c >>> DOM loaded ', 'background: #222; color: #bada55');
+console.log('%c >>> DOM loaded ', 'background: #222; color: #bada55');
 
 function download(content, fileName, contentType) {
-    var a = document.createElement("a");
-    // var file = new Blob(["\ufeff", content], {type: contentType});
-    var file = new Blob([content], {type: contentType});
+    let a = document.createElement("a");
+    // let file = new Blob(["\ufeff", content], {type: contentType});
+    let file = new Blob([content], {type: contentType});
     a.href = URL.createObjectURL(file);
-    a.download = fileName;
+    a.download = fileName+'.txt';
     a.click();
 }
 
 let joinedDataMergeText;
-let headerOption = document.getElementById('header_option');
-console.log(headerOption.value);
-let inputArea = document.getElementById('input_area');
-let outputArea = document.getElementById('output_area');
-let copyButton = document.getElementById('copy_button');
-let saveButton = document.getElementById('save_button');
+const headerOption = document.getElementById('header_option');
+const fileNameOption = document.getElementById('filename_option');
+const inputArea = document.getElementById('input_area');
+const outputArea = document.getElementById('output_area');
+const copyButton = document.getElementById('copy_button');
+const saveButton = document.getElementById('save_button');
+
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].addEventListener('change', renewButtons);
+    }
 
 headerOption.addEventListener('input', function() {
+    renewButtons();
+});
+fileNameOption.addEventListener('input', function() {
     renewButtons();
 });
 
@@ -31,7 +39,6 @@ copyButton.addEventListener('click', () => {
         document.execCommand('copy');
         copyButton.textContent = 'COPIED!';
         copyButton.classList.add('animate_width');
-        // generateRanges();
     }
 });
 
@@ -41,26 +48,23 @@ saveButton.addEventListener('click', () => {
         outputArea.select();
         saveButton.textContent = 'SAVED!';
         saveButton.classList.add('animate_width');
-        // getFileName();
-        download(joinedDataMergeText, 'data-merge.txt', 'text/plain');
+        let fileName = fileNameOption.value;
+        download(joinedDataMergeText, fileName, 'text/plain');
     } else {
         // riseWarning('no data');
     }
 });
 
 function generateRanges() {
-    // let inputArea = document.getElementById('input_area');
-    // let inputText = inputArea.value;
-    // let outputArea = document.getElementById('output_area');
     outputArea.value = '';
     dataGenerated = false;
 
-if (inputArea.value == '') {
-    riseWarning('no digits');
-    inputArea.select();
-    renewButtons();
-    return;
-}
+    if (inputArea.value == '') {
+        riseWarning('no digits');
+        inputArea.select();
+        renewButtons();
+        return;
+    }
 
     console.log('%c Input text: ', 'background: #ccc; color: black');
     console.log(inputArea.value);
@@ -102,7 +106,7 @@ if (inputArea.value == '') {
     }
 
     if (document.getElementById('header_checkbox').checked) {
-        let headerText = document.getElementById('header_option').value;
+        let headerText = headerOption.value;
         unpackedRangesArray.unshift(headerText);
     }
     console.log('%c Unpacked ranges: ', 'background: #99ccff; color: black');
@@ -175,13 +179,20 @@ function riseWarning(type) {
     for (let i = 0; i < tx.length; i++) {
         tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;');
         // tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;overflow-y:hidden;');
-        tx[i].addEventListener('input', OnInput, false);
-        tx[i].addEventListener('change', OnInput, false);
+        tx[i].addEventListener('input', OnInput);
+        tx[i].addEventListener('change', OnInput);
     }
 
     function OnInput() {
         this.style.height = 'auto';
-        this.style.height = (this.scrollHeight) + 'px';
+        // this.style.height = (this.scrollHeight) + 'px';
+        if (this.scrollHeight > 500) {
+            this.style.height = '500px';
+        } else {
+            this.style.height = (this.scrollHeight) + 'px';
+        }
+
+
         // if (!inputArea.textContent == '') {
             renewButtons();
         // } else {
