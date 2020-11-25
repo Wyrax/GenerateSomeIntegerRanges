@@ -126,6 +126,9 @@ function generateRanges() {
     console.log('%c Result generated: ', 'background: #ff9900; color: black');
     console.log(joinedDataMergeText.split('\n'));
 
+    //joinedDataMergeText.getMaxValue
+    //forEach index.value.length-maxValue.length add '0'
+
     outputArea.value = joinedDataMergeText;
 
     if (outputArea.scrollHeight > 500) {
