@@ -113,7 +113,35 @@ function generateRanges() {
         unpackedRangesArray.unshift(headerText);
     }
     console.log('%c Unpacked ranges: ', 'background: #99ccff; color: black');
+    unpackedRangesArray = unpackedRangesArray.map(String);
     console.log(unpackedRangesArray);
+
+    if (document.getElementById('zeros_checkbox').checked) {
+        //(unpackedRangesArray.getMaxValue
+        // let longestValue = '';
+        let longestValueLength = 0;
+        for (let i = 0; i < unpackedRangesArray.length; i++) {
+            // console.log('unpackedRangesArray[i] = '+unpackedRangesArray[i]);
+            // console.log('unpackedRangesArray[i].length = '+unpackedRangesArray[i].length);
+            // console.log({longestValueLength});
+            if (unpackedRangesArray[i].length > longestValueLength) {
+                // longestValue = unpackedRangesArray[i];
+                longestValueLength = unpackedRangesArray[i].length; //toString
+            }
+        }
+        // console.log({longestValue});
+        console.log({longestValueLength});
+        //forEach index.value.length-maxValue.length add '0'
+        unpackedRangesArray.forEach(addLeadingZeros);
+
+        function addLeadingZeros(str) {
+            console.log('str before: ' + str);
+            console.log('str padded: ' + str.padStart(longestValueLength, '0'));
+            return str.padStart(longestValueLength, '0');
+            console.log('str after' + str);
+            console.log('padStart+');
+        }
+    }
 
     if (document.getElementById('duplicates_checkbox').checked) {
         let dataMergeSet = new Set(unpackedRangesArray);
@@ -124,10 +152,8 @@ function generateRanges() {
         joinedDataMergeText = unpackedRangesArray.join('\n');
     }
     console.log('%c Result generated: ', 'background: #ff9900; color: black');
-    console.log(joinedDataMergeText.split('\n'));
-
-    //joinedDataMergeText.getMaxValue
-    //forEach index.value.length-maxValue.length add '0'
+    console.log(joinedDataMergeText.split('\n')); //split applied to compress output in the console into array
+    // console.log(joinedDataMergeText);
 
     outputArea.value = joinedDataMergeText;
 
