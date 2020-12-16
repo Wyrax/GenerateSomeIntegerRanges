@@ -117,29 +117,24 @@ function generateRanges() {
     console.log(unpackedRangesArray);
 
     if (document.getElementById('zeros_checkbox').checked) {
-        //(unpackedRangesArray.getMaxValue
-        // let longestValue = '';
         let longestValueLength = 0;
         for (let i = 0; i < unpackedRangesArray.length; i++) {
-            // console.log('unpackedRangesArray[i] = '+unpackedRangesArray[i]);
-            // console.log('unpackedRangesArray[i].length = '+unpackedRangesArray[i].length);
-            // console.log({longestValueLength});
             if (unpackedRangesArray[i].length > longestValueLength) {
-                // longestValue = unpackedRangesArray[i];
-                longestValueLength = unpackedRangesArray[i].length; //toString
+                longestValueLength = unpackedRangesArray[i].length;
             }
         }
-        // console.log({longestValue});
         console.log({longestValueLength});
-        //forEach index.value.length-maxValue.length add '0'
         unpackedRangesArray.forEach(addLeadingZeros);
 
-        function addLeadingZeros(str) {
-            console.log('str before: ' + str);
-            console.log('str padded: ' + str.padStart(longestValueLength, '0'));
-            return str.padStart(longestValueLength, '0');
-            console.log('str after' + str);
-            console.log('padStart+');
+        function addLeadingZeros(str, index, array) {
+            if (document.getElementById('header_checkbox').checked && index == 0) {
+                return;
+            } else {
+                console.log('str before: ' + str);
+                console.log('str padded: ' + str.padStart(longestValueLength, '0'));
+                array[index] = str.padStart(longestValueLength, '0');
+            }
+           
         }
     }
 
