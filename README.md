@@ -1,5 +1,6 @@
-# Generate Some Positive* Integer Incrementing** Ranges
-Tool that generates multiple integer ranges with one dash and comma separated input.
+# Data Merge ranges generator for Adobe Indesign
+
+## This tool generates some positive* integer incrementing** ranges
 
 General purpose of this script is to generate number ranges for the Data Merge function of Adobe InDesign publishing software so it has some limitations:
 

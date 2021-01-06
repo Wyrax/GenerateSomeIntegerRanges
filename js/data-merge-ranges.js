@@ -130,8 +130,7 @@ function generateRanges() {
             if (document.getElementById('header_checkbox').checked && index == 0) {
                 return;
             } else {
-                console.log('str before: ' + str);
-                console.log('str padded: ' + str.padStart(longestValueLength, '0'));
+                // console.log('str padded: ' + str.padStart(longestValueLength, '0'));
                 array[index] = str.padStart(longestValueLength, '0');
             }
            
