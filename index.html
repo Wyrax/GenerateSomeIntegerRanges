@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Some Positive Integer Incrementing Ranges</title>
+    <link rel="icon" href="ico/data-merge-ranges.ico">
+    <link rel="stylesheet" href="css/data-merge-ranges.css">
+    <script src="js/data-merge-ranges.js"></script>
+</head>
+<body>
+<div class="main_wrapper">
+    <h1>Data Merge ranges&nbsp;generator for&nbsp;Adobe&nbsp;Indesign</h1>
+    <h2> This tool generates some positive* integer incrementing** ranges</h2>
+    <p>General purpose of this script is to generate number ranges for the Data Merge function of Adobe InDesign publishing software so it has some limitations:</p>
+    <p>* Negative numbers not accepted as the dash symbol used for a range indication.</p>
+    <p>** This script serves incrementing integers only.</p><br>
+    <div id="option_area_wrapper" class="options_wrapper">
+        <label class="container">Add header row:
+            <input id="header_checkbox" type="checkbox" checked="checked">
+            <span class="checkmark"></span>
+        </label>
+        <input id="header_option" class="option_textfield" type="text" value="i"><br>
+        <label class="container">Sort in ascending order
+            <input id="sort_checkbox" type="checkbox" checked="checked">
+            <span class="checkmark"></span>
+        </label><br>
+        <label class="container">Remove duplicates
+            <input id="duplicates_checkbox" type="checkbox" checked="checked">
+            <span class="checkmark"></span>
+        </label><br>
+        <label class="container">Add leading zero(s)
+            <input id="zeros_checkbox" type="checkbox">
+            <span class="checkmark"></span>
+        </label>
+    </div>
+    <div id="input_area_wrapper" class="textarea_wrapper">
+        <textarea id="input_area" name="input_area" rows="auto" cols="20" placeholder="Example: 1, 2, 5-7, 42-50, 98-102, 16, 74"></textarea>
+    </div>
+    <div id="output_area_wrapper" class="textarea_wrapper">
+        <textarea id="output_area" name="output_area" rows="auto" cols="20" placeholder="Output field"></textarea>
+    </div>
+    <div class="button_wrapper">
+        <button id="copy_button">GENERATE & COPY</button>
+        <button id="save_button">GENERATE & SAVE</button>
+        <label class="option_label">File name:
+            <input id="filename_option" class="option_textfield" type="text" value="data_merge">.txt
+        </label>
+    </div>
+
+</div>
+</body>
+</html>
