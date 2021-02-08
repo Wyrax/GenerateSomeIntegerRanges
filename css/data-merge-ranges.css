@@ -140,3 +140,9 @@ button {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
+
+  /* Counter */
+  .counter {
+    text-align: center;
+    /* visibility: hidden; */
+  }
